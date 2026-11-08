@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123d69">
+
+  <title>Admin Login | AlongDigital</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #eef3f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(110deg, #10365e, #0756a0);
+      color: white;
+      padding: 22px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand h2 {
+      font-size: 25px;
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      color: #ffd83d;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .home-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 35px 15px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: white;
+      padding: 38px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.09);
+    }
+
+    .login-icon {
+      width: 70px;
+      height: 70px;
+      background: #e5effb;
+      color: #174f85;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      margin: 0 auto 18px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #173e67;
+      font-size: 27px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #758397;
+      margin: 10px 0 30px;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      color: #263d56;
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #d7e0ea;
+      border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      background: #fbfdff;
+    }
+
+    input:focus {
+      border-color: #1760a0;
+      box-shadow: 0 0 0 3px rgba(23,96,160,.10);
+    }
+
+    .password-box {
+      position: relative;
+    }
+
+    .password-box input {
+      padding-right: 65px;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      color: #17558b;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(110deg,#164c7f,#0870c5);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .login-btn:active {
+      transform: scale(.98);
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #b45309;
+      line-height: 1.5;
+    }
+
+    .security {
+      text-align: center;
+      margin-top: 25px;
+      color: #8190a1;
+      font-size: 13px;
+    }
+
+    footer {
+      background: #10365e;
+      color: white;
+      text-align: center;
+      padding: 17px;
+      font-size: 13px;
+    }
+
+    @media(max-width:480px) {
+      header {
+        padding: 20px;
+      }
+
+      .brand h2 {
+        font-size: 20px;
+      }
+
+      .login-card {
+        padding: 30px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="brand">
+      <h2>ALONGDIGITAL</h2>
+      <p>Admin Management Portal</p>
+    </div>
+
+    <a href="index.html" class="home-link">Home</a>
+  </header>
+
+  <main>
+
+    <section class="login-card">
+
+      <div class="login-icon">♙</div>
+
+      <h1>Admin Login</h1>
+
+      <p class="subtitle">
+        Sign in to manage student records and results
+      </p>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="userId">User ID</label>
+          <input
+            type="text"
+            id="userId"
+            placeholder="Enter your User ID"
+            autocomplete="username"
+            required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+
+          <div class="password-box">
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required>
+
+            <button
+              type="button"
+              class="toggle"
+              id="togglePassword">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          Login to Dashboard
+        </button>
+
+        <p id="message" role="status">
+          Secure administrator access
+        </p>
+
+      </form>
+
+      <div class="security">
+        Secure Login · AlongDigital
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 AlongDigital · All Rights Reserved
+  </footer>
+
+  <script>
+    const password = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    toggle.addEventListener("click", function () {
+      const hidden = password.type === "password";
+
+      password.type = hidden ? "text" : "password";
+      toggle.textContent = hidden ? "Hide" : "Show";
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      message.textContent =
+        "Backend connection pending. Login verification will be enabled after Apps Script integration.";
+    });
+  </script>
+
+</body>
+</html>

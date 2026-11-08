@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marks Management | AlongDigital</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f3f6fc;
+  color:#17233c;
+}
+
+.sidebar{
+  width:245px;
+  height:100vh;
+  position:fixed;
+  left:0;
+  top:0;
+  background:#101d3b;
+  color:white;
+  padding:25px 17px;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:800;
+  padding:5px 10px 30px;
+  letter-spacing:1px;
+}
+
+.brand span{color:#55a4ff;}
+
+.menu a{
+  display:block;
+  color:#c5d0e5;
+  text-decoration:none;
+  padding:14px;
+  border-radius:10px;
+  margin:6px 0;
+  font-size:14px;
+}
+
+.menu a:hover,
+.menu a.active{
+  background:#233b68;
+  color:white;
+}
+
+.menu a.active{
+  border-left:4px solid #55a4ff;
+}
+
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:17px;
+  right:17px;
+}
+
+.main{
+  margin-left:245px;
+  padding:28px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:28px;
+}
+
+.topbar h2{font-size:24px;}
+
+.admin{
+  background:white;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:13px;
+  box-shadow:0 3px 15px #dce3ef;
+}
+
+.welcome{
+  background:linear-gradient(120deg,#17366c,#2868bd);
+  color:white;
+  padding:25px;
+  border-radius:17px;
+  margin-bottom:24px;
+}
+
+.welcome h2{margin-bottom:8px;}
+.welcome p{color:#d8e8ff;font-size:14px;}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+  margin-bottom:24px;
+}
+
+.stat{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 4px 15px #e3e9f3;
+}
+
+.stat p{
+  color:#78849a;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.stat h2{font-size:25px;}
+
+.panel{
+  background:white;
+  border-radius:16px;
+  padding:23px;
+  margin-bottom:23px;
+  box-shadow:0 4px 15px #e3e9f3;
+}
+
+.panel h3{
+  margin-bottom:20px;
+  font-size:18px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  color:#526078;
+  margin-bottom:7px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:12px;
+  border:1px solid #dce3ee;
+  border-radius:9px;
+  outline:none;
+  background:#fff;
+  font-size:14px;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:#347de0;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+button{
+  border:0;
+  padding:12px 19px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.primary{
+  background:#2468c5;
+  color:white;
+}
+
+.secondary{
+  background:#edf2fa;
+  color:#263b5d;
+}
+
+.danger{
+  background:#fff0f0;
+  color:#d33c3c;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+th,td{
+  padding:14px 12px;
+  text-align:left;
+  border-bottom:1px solid #edf0f5;
+  font-size:13px;
+}
+
+th{
+  color:#71809a;
+  background:#f7f9fd;
+  font-weight:600;
+}
+
+td button{
+  padding:7px 10px;
+  margin:2px;
+  font-size:12px;
+}
+
+.empty{
+  text-align:center;
+  padding:30px;
+  color:#8490a4;
+}
+
+.note{
+  font-size:12px;
+  color:#7b879b;
+  margin-top:13px;
+}
+
+@media(max-width:850px){
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+    padding:15px;
+  }
+
+  .brand{padding:5px 8px 15px;}
+
+  .menu{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+  }
+
+  .menu a{
+    white-space:nowrap;
+    padding:10px;
+    margin:0;
+  }
+
+  .logout{
+    position:static;
+    margin-top:10px;
+  }
+
+  .main{
+    margin-left:0;
+    padding:17px;
+  }
+
+  .stats{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr 1fr;}
+}
+
+@media(max-width:500px){
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .form-grid{grid-template-columns:1fr;}
+  .panel{padding:16px;}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+  <div class="brand">ALONG<span>DIGITAL</span></div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="students.html">Students</a>
+    <a href="marks.html" class="active">Marks Management</a>
+    <a href="settings.html">Settings</a>
+  </nav>
+
+  <div class="logout">
+    <a href="../adminlogin.html" style="color:#ffbaba;text-decoration:none;padding:12px;display:block;">
+      Logout
+    </a>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <h2>Marks Management</h2>
+    <div class="admin">Administrator Panel</div>
+  </header>
+
+  <section class="welcome">
+    <h2>Academic Marks Control</h2>
+    <p>Add, update and manage student subject-wise marks.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <p>Marks Records</p>
+      <h2 id="recordCount">0</h2>
+    </div>
+
+    <div class="stat">
+      <p>Total Marks Entered</p>
+      <h2 id="totalMarks">0</h2>
+    </div>
+
+    <div class="stat">
+      <p>Average Percentage</p>
+      <h2 id="averagePercent">0%</h2>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3 id="formTitle">Enter Student Marks</h3>
+
+    <form id="marksForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Student ID (11 digits)</label>
+          <input id="studentId" type="text" maxlength="11"
+          inputmode="numeric" pattern="[0-9]{11}" required
+          placeholder="Enter Student ID">
+        </div>
+
+        <div class="field">
+          <label>Class</label>
+          <select id="studentClass" required>
+            <option value="">Select Class</option>
+            <option>III</option>
+            <option>IV</option>
+            <option>V</option>
+            <option>VI</option>
+            <option>VII</option>
+            <option>VIII</option>
+            <option>IX</option>
+            <option>X</option>
+            <option>XI</option>
+            <option>XII</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Exam Type</label>
+          <select id="examType" required>
+            <option value="">Select Exam</option>
+            <option>Unit Test</option>
+            <option>Half Yearly</option>
+            <option>Annual Examination</option>
+            <option>Practical</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Subject</label>
+          <input id="subject" type="text" required
+          placeholder="e.g. Physics">
+        </div>
+
+        <div class="field">
+          <label>Marks Obtained</label>
+          <input id="obtained" type="number" min="0"
+          required placeholder="Obtained marks">
+        </div>
+
+        <div class="field">
+          <label>Maximum Marks</label>
+          <input id="maximum" type="number" min="1"
+          required placeholder="Maximum marks">
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary" id="saveBtn">
+          Save Marks
+        </button>
+
+        <button type="reset" class="secondary" id="resetBtn">
+          Clear Form
+        </button>
+      </div>
+
+      <p class="note">
+        Note: Student ID must match the ID entered in Student Management.
+      </p>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h3>Marks Records</h3>
+
+    <div class="field" style="max-width:350px;margin-bottom:18px;">
+      <label>Search by Student ID or Subject</label>
+      <input id="searchInput" type="text"
+      placeholder="Search records...">
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Class</th>
+            <th>Exam</th>
+            <th>Subject</th>
+            <th>Obtained</th>
+            <th>Maximum</th>
+            <th>Percentage</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="marksTable">
+          <tr>
+            <td colspan="8" class="empty">
+              No marks records available.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+let marksRecords = [];
+let editIndex = -1;
+
+const form = document.getElementById("marksForm");
+const table = document.getElementById("marksTable");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const studentId = document.getElementById("studentId").value.trim();
+  const studentClass = document.getElementById("studentClass").value;
+  const examType = document.getElementById("examType").value;
+  const subject = document.getElementById("subject").value.trim();
+  const obtained = Number(document.getElementById("obtained").value);
+  const maximum = Number(document.getElementById("maximum").value);
+
+  if(!/^[0-9]{11}$/.test(studentId)){
+    alert("Student ID must contain exactly 11 digits.");
+    return;
+  }
+
+  if(!subject || maximum <= 0 || obtained < 0 || obtained > maximum){
+    alert("Please enter valid marks and maximum marks.");
+    return;
+  }
+
+  const record = {
+    studentId,
+    studentClass,
+    examType,
+    subject,
+    obtained,
+    maximum
+  };
+
+  if(editIndex === -1){
+    marksRecords.push(record);
+  }else{
+    marksRecords[editIndex] = record;
+    editIndex = -1;
+  }
+
+  form.reset();
+  document.getElementById("formTitle").textContent = "Enter Student Marks";
+  document.getElementById("saveBtn").textContent = "Save Marks";
+
+  renderMarks();
+});
+
+function renderMarks(){
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  const filtered = marksRecords
+    .map((record,index)=>({...record,index}))
+    .filter(record =>
+      record.studentId.toLowerCase().includes(search) ||
+      record.subject.toLowerCase().includes(search)
+    );
+
+  if(filtered.length === 0){
+    table.innerHTML = `
+      <tr>
+        <td colspan="8" class="empty">No matching records found.</td>
+      </tr>`;
+  }else{
+    table.innerHTML = filtered.map(record=>{
+      const percentage = (record.obtained / record.maximum * 100).toFixed(1);
+
+      return `
+      <tr>
+        <td>${record.studentId}</td>
+        <td>${record.studentClass}</td>
+        <td>${record.examType}</td>
+        <td>${escapeHTML(record.subject)}</td>
+        <td>${record.obtained}</td>
+        <td>${record.maximum}</td>
+        <td>${percentage}%</td>
+        <td>
+          <button class="secondary" onclick="editMarks(${record.index})">Edit</button>
+          <button class="danger" onclick="deleteMarks(${record.index})">Delete</button>
+        </td>
+      </tr>`;
+    }).join("");
+  }
+
+  updateStats();
+}
+
+function editMarks(index){
+  const record = marksRecords[index];
+
+  document.getElementById("studentId").value = record.studentId;
+  document.getElementById("studentClass").value = record.studentClass;
+  document.getElementById("examType").value = record.examType;
+  document.getElementById("subject").value = record.subject;
+  document.getElementById("obtained").value = record.obtained;
+  document.getElementById("maximum").value = record.maximum;
+
+  editIndex = index;
+
+  document.getElementById("formTitle").textContent = "Edit Student Marks";
+  document.getElementById("saveBtn").textContent = "Update Marks";
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function deleteMarks(index){
+  if(confirm("Are you sure you want to delete this marks record?")){
+    marksRecords.splice(index,1);
+    editIndex = -1;
+    renderMarks();
+  }
+}
+
+function updateStats(){
+  const count = marksRecords.length;
+
+  const total = marksRecords.reduce((sum,r)=>sum+r.obtained,0);
+
+  const percentage = count
+    ? marksRecords.reduce((sum,r)=>sum+(r.obtained/r.maximum*100),0)/count
+    : 0;
+
+  document.getElementById("recordCount").textContent = count;
+  document.getElementById("totalMarks").textContent = total;
+  document.getElementById("averagePercent").textContent =
+    percentage.toFixed(1) + "%";
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+document.getElementById("searchInput")
+  .addEventListener("input",renderMarks);
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  editIndex = -1;
+  document.getElementById("formTitle").textContent = "Enter Student Marks";
+  document.getElementById("saveBtn").textContent = "Save Marks";
+});
+
+renderMarks();
+</script>
+
+</body>
+</html>

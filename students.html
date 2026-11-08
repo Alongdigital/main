@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b68">
+<title>Student Management | AlongDigital</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+
+:root{
+--navy:#123b68;
+--blue:#1765a5;
+--gold:#f4c52e;
+--bg:#f1f5fa;
+}
+
+body{background:var(--bg);color:#263b52}
+
+.sidebar{
+position:fixed;top:0;left:0;width:245px;height:100vh;
+background:linear-gradient(180deg,#10365e,#08294b);
+padding:25px 17px;color:white;z-index:100;
+transition:.3s
+}
+
+.brand{padding:5px 10px 27px;border-bottom:1px solid #ffffff25}
+.brand h2{font-size:22px;letter-spacing:1px}
+.brand span{color:var(--gold)}
+.brand p{font-size:12px;color:#c8d8eb;margin-top:6px}
+
+.menu-title{font-size:11px;color:#91a9c2;margin:27px 10px 12px;letter-spacing:1px}
+
+.nav-link{
+display:flex;align-items:center;gap:12px;
+padding:13px 12px;margin:5px 0;border-radius:9px;
+color:#d8e5f2;text-decoration:none;font-size:14px
+}
+.nav-link:hover,.nav-link.active{background:#ffffff19;color:white}
+.nav-link.active{border-left:3px solid var(--gold)}
+
+.main{margin-left:245px;min-height:100vh}
+
+.topbar{
+height:72px;background:white;display:flex;align-items:center;
+justify-content:space-between;padding:0 28px;
+box-shadow:0 2px 12px #00000008
+}
+
+.topbar h3{color:var(--navy)}
+.profile{display:flex;align-items:center;gap:10px}
+.avatar{
+width:39px;height:39px;border-radius:50%;
+background:#e5effa;color:var(--navy);
+display:grid;place-items:center;font-size:19px
+}
+.profile small{display:block;color:#8795a5;font-size:11px;margin-top:4px}
+
+.menu-toggle{display:none;background:none;border:0;font-size:25px;color:var(--navy)}
+
+.content{padding:28px;max-width:1500px;margin:auto}
+
+.heading{
+display:flex;justify-content:space-between;
+align-items:center;gap:15px;margin-bottom:24px
+}
+.heading h1{font-size:25px;color:var(--navy);margin-bottom:7px}
+.heading p{font-size:13px;color:#8290a0}
+
+.btn{
+border:0;border-radius:8px;padding:12px 17px;
+font-size:13px;font-weight:bold;cursor:pointer
+}
+.primary{background:var(--navy);color:white}
+.secondary{background:#e8f0fa;color:var(--navy)}
+.danger{background:#fff0f0;color:#c03939}
+
+.stats{
+display:grid;grid-template-columns:repeat(3,1fr);
+gap:16px;margin-bottom:23px
+}
+.stat{
+background:white;border:1px solid #e7edf4;
+border-radius:12px;padding:20px
+}
+.stat span{font-size:13px;color:#8794a4}
+.stat h2{font-size:26px;color:var(--navy);margin-top:10px}
+
+.panel{
+background:white;border:1px solid #e7edf4;
+border-radius:13px;margin-bottom:22px;overflow:hidden
+}
+.panel-head{
+padding:19px 21px;border-bottom:1px solid #edf0f5;
+display:flex;justify-content:space-between;align-items:center
+}
+.panel-head h3{font-size:16px;color:var(--navy)}
+
+.form-grid{
+padding:23px;display:grid;
+grid-template-columns:repeat(2,1fr);gap:17px
+}
+.field label{
+display:block;font-size:13px;font-weight:bold;
+color:#40546b;margin-bottom:8px
+}
+.field input,.field select{
+width:100%;padding:13px;border:1px solid #dce4ed;
+border-radius:8px;background:#fbfdff;
+outline:none;font-size:14px
+}
+.field input:focus,.field select:focus{border-color:var(--blue)}
+
+.full{grid-column:1/-1}
+
+.form-actions{
+padding:0 23px 23px;display:flex;gap:10px;justify-content:flex-end
+}
+
+.toolbar{
+padding:18px;display:flex;gap:12px;flex-wrap:wrap
+}
+.toolbar input,.toolbar select{
+padding:12px;border:1px solid #dce4ed;
+border-radius:8px;background:white;outline:none
+}
+.toolbar input{flex:1;min-width:180px}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th,td{padding:15px 17px;text-align:left;border-top:1px solid #edf0f5;font-size:13px}
+th{background:#f8fafd;color:#667a91;font-size:12px}
+td{color:#40546b}
+
+.student-name{font-weight:bold;color:#193d63}
+.student-id{font-size:11px;color:#8493a3;margin-top:5px}
+
+.status{
+padding:6px 10px;border-radius:20px;
+font-size:11px;background:#e8f7ee;color:#16834a
+}
+
+.actions{display:flex;gap:7px}
+.small-btn{padding:7px 10px;border:0;border-radius:6px;cursor:pointer;font-size:12px}
+
+.empty{text-align:center;padding:35px;color:#8a98a8;font-size:13px}
+
+.overlay{
+position:fixed;inset:0;background:#0007;
+display:none;align-items:center;justify-content:center;
+padding:15px;z-index:200
+}
+.overlay.show{display:flex}
+.modal{
+background:white;width:100%;max-width:500px;
+padding:25px;border-radius:15px
+}
+.modal h3{color:var(--navy);margin-bottom:15px}
+.modal p{color:#718096;font-size:14px;line-height:1.6}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+
+footer{text-align:center;padding:25px;color:#8794a4;font-size:12px}
+
+@media(max-width:1000px){
+.stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:700px){
+.sidebar{transform:translateX(-100%)}
+.sidebar.show{transform:translateX(0)}
+.main{margin-left:0}
+.menu-toggle{display:block}
+.topbar{padding:0 15px}
+.content{padding:20px 14px}
+.heading{align-items:flex-start;flex-direction:column}
+.stats{grid-template-columns:1fr 1fr}
+.form-grid{grid-template-columns:1fr;padding:17px}
+.full{grid-column:auto}
+.form-actions{padding:0 17px 17px}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<h2>ALONG<span>DIGITAL</span></h2>
+<p>Student Result Portal</p>
+</div>
+
+<div class="menu-title">MAIN MENU</div>
+<a href="dashboard.html" class="nav-link">⌂ Dashboard</a>
+<a href="students.html" class="nav-link active">♙ Students</a>
+<a href="marks.html" class="nav-link">▤ Marks Management</a>
+<a href="#" class="nav-link">✓ Result Management</a>
+
+<div class="menu-title">CONFIGURATION</div>
+<a href="settings.html" class="nav-link">⚙ Website Settings</a>
+<a href="settings.html" class="nav-link">▧ Image Management</a>
+<a href="settings.html" class="nav-link">▤ Database Settings</a>
+
+<div style="position:absolute;bottom:20px;left:17px;right:17px">
+<a href="../index.html" class="nav-link">↗ View Website</a>
+<a href="../adminlogin.html" class="nav-link">⇥ Logout</a>
+</div>
+</aside>
+
+<div class="main">
+
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:14px">
+<button class="menu-toggle" id="menuToggle">☰</button>
+<h3>Student Management</h3>
+</div>
+
+<div class="profile">
+<div class="avatar">♙</div>
+<div>
+<strong id="adminName">Administrator</strong>
+<small>Admin Account</small>
+</div>
+</div>
+</header>
+
+<main class="content">
+
+<section class="heading">
+<div>
+<h1>Student Records</h1>
+<p>Manage student information and academic identities.</p>
+</div>
+<button class="btn primary" id="addBtn">+ Add Student</button>
+</section>
+
+<section class="stats">
+<div class="stat">
+<span>Total Students</span>
+<h2 id="totalCount">000</h2>
+</div>
+<div class="stat">
+<span>Active Records</span>
+<h2 id="activeCount">000</h2>
+</div>
+<div class="stat">
+<span>Classes Covered</span>
+<h2 id="classCount">000</h2>
+</div>
+</section>
+
+<section class="panel" id="formPanel" style="display:none">
+<div class="panel-head">
+<h3 id="formTitle">Add New Student</h3>
+<button class="btn secondary" id="closeForm">✕</button>
+</div>
+
+<form id="studentForm">
+<div class="form-grid">
+
+<div class="field">
+<label>Student Full Name *</label>
+<input id="name" required placeholder="Enter student name">
+</div>
+
+<div class="field">
+<label>Father's Name</label>
+<input id="father" placeholder="Enter father's name">
+</div>
+
+<div class="field">
+<label>Student ID (11 Digits) *</label>
+<input id="studentId" required maxlength="11" inputmode="numeric" placeholder="12345678901">
+</div>
+
+<div class="field">
+<label>Roll Number (4–5 Digits) *</label>
+<input id="roll" required maxlength="5" inputmode="numeric" placeholder="0042">
+</div>
+
+<div class="field">
+<label>Class *</label>
+<select id="className" required>
+<option value="">Select Class</option>
+<option>III</option><option>IV</option><option>V</option>
+<option>VI</option><option>VII</option><option>VIII</option>
+<option>IX</option><option>X</option><option>XI</option>
+<option>XII</option>
+</select>
+</div>
+
+<div class="field">
+<label>Section</label>
+<select id="section">
+<option value="">Select Section</option>
+<option>A</option><option>B</option><option>C</option>
+<option>D</option><option>E</option>
+</select>
+</div>
+
+<div class="field">
+<label>Date of Birth *</label>
+<input type="date" id="dob" required>
+</div>
+
+<div class="field">
+<label>Gender</label>
+<select id="gender">
+<option value="">Select Gender</option>
+<option>Male</option><option>Female</option><option>Other</option>
+</select>
+</div>
+
+<div class="field full">
+<label>Student Photo URL (Optional)</label>
+<input id="photo" type="url" placeholder="https://example.com/photo.jpg">
+</div>
+
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn secondary" id="cancelBtn">Cancel</button>
+<button type="submit" class="btn primary">Save Student</button>
+</div>
+</form>
+</section>
+
+<section class="panel">
+<div class="panel-head">
+<h3>All Students</h3>
+<span style="font-size:12px;color:#8493a3">Student Directory</span>
+</div>
+
+<div class="toolbar">
+<input type="search" id="search" placeholder="Search name, ID or roll number...">
+
+<select id="filterClass">
+<option value="">All Classes</option>
+<option>III</option><option>IV</option><option>V</option>
+<option>VI</option><option>VII</option><option>VIII</option>
+<option>IX</option><option>X</option><option>XI</option>
+<option>XII</option>
+</select>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>STUDENT</th>
+<th>ROLL NO.</th>
+<th>CLASS</th>
+<th>DOB</th>
+<th>STATUS</th>
+<th>ACTIONS</th>
+</tr>
+</thead>
+<tbody id="studentTable">
+<tr><td colspan="6" class="empty">No student records available. Add a student to begin.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<footer>
+© 2026 AlongDigital · Student Management System
+</footer>
+
+</main>
+</div>
+
+<div class="overlay" id="deleteModal">
+<div class="modal">
+<h3>Delete Student?</h3>
+<p>Are you sure you want to delete this student record? This action cannot be undone.</p>
+<div class="modal-actions">
+<button class="btn secondary" id="keepBtn">Cancel</button>
+<button class="btn danger" id="confirmDelete">Delete</button>
+</div>
+</div>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+document.getElementById("menuToggle").onclick=()=>sidebar.classList.toggle("show");
+
+const formPanel=document.getElementById("formPanel");
+const form=document.getElementById("studentForm");
+const table=document.getElementById("studentTable");
+
+let students=[];
+let editId=null;
+let deleteId=null;
+
+function showForm(){
+form.reset();
+editId=null;
+document.getElementById("formTitle").textContent="Add New Student";
+document.getElementById("studentId").disabled=false;
+formPanel.style.display="block";
+formPanel.scrollIntoView({behavior:"smooth"});
+}
+
+function hideForm(){
+formPanel.style.display="none";
+form.reset();
+editId=null;
+}
+
+document.getElementById("addBtn").onclick=showForm;
+document.getElementById("closeForm").onclick=hideForm;
+document.getElementById("cancelBtn").onclick=hideForm;
+
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",
+'"':"&quot;","'":"&#39;"
+}[char]));
+}
+
+form.onsubmit=function(e){
+e.preventDefault();
+
+const data={
+id:document.getElementById("studentId").value.trim(),
+name:document.getElementById("name").value.trim(),
+father:document.getElementById("father").value.trim(),
+roll:document.getElementById("roll").value.trim(),
+className:document.getElementById("className").value,
+section:document.getElementById("section").value,
+dob:document.getElementById("dob").value,
+gender:document.getElementById("gender").value,
+photo:document.getElementById("photo").value.trim()
+};
+
+if(!/^\d{11}$/.test(data.id)){
+alert("Student ID must contain exactly 11 digits.");
+return;
+}
+
+if(!/^\d{4,5}$/.test(data.roll)){
+alert("Roll number must contain 4 or 5 digits.");
+return;
+}
+
+if(!editId && students.some(s=>s.id===data.id)){
+alert("Student ID already exists.");
+return;
+}
+
+if(!editId && students.some(s=>s.roll===data.roll && s.className===data.className && s.section===data.section)){
+alert("This roll number already exists in this class and section.");
+return;
+}
+
+if(editId){
+const index=students.findIndex(s=>s.id===editId);
+students[index]=data;
+}else{
+students.push(data);
+}
+
+renderStudents();
+hideForm();
+};
+
+function editStudent(id){
+const s=students.find(x=>x.id===id);
+if(!s)return;
+
+editId=id;
+document.getElementById("formTitle").textContent="Edit Student";
+document.getElementById("studentId").disabled=true;
+
+Object.keys(s).forEach(key=>{
+const field=document.getElementById(
+key==="className"?"className":key
+);
+if(field)field.value=s[key];
+});
+
+formPanel.style.display="block";
+formPanel.scrollIntoView({behavior:"smooth"});
+}
+
+function askDelete(id){
+deleteId=id;
+document.getElementById("deleteModal").classList.add("show");
+}
+
+document.getElementById("keepBtn").onclick=()=>{
+document.getElementById("deleteModal").classList.remove("show");
+};
+
+document.getElementById("confirmDelete").onclick=()=>{
+students=students.filter(s=>s.id!==deleteId);
+deleteId=null;
+document.getElementById("deleteModal").classList.remove("show");
+renderStudents();
+};
+
+function renderStudents(){
+const query=document.getElementById("search").value.toLowerCase();
+const cls=document.getElementById("filterClass").value;
+
+const filtered=students.filter(s=>{
+const match=[s.name,s.id,s.roll].some(v=>v.toLowerCase().includes(query));
+return match&&(!cls||s.className===cls);
+});
+
+document.getElementById("totalCount").textContent=students.length;
+document.getElementById("activeCount").textContent=students.length;
+document.getElementById("classCount").textContent=new Set(students.map(s=>s.className)).size;
+
+if(!filtered.length){
+table.innerHTML='<tr><td colspan="6" class="empty">No matching student records found.</td></tr>';
+return;
+}
+
+table.innerHTML=filtered.map(s=>`
+<tr>
+<td>
+<div class="student-name">${escapeHTML(s.name)}</div>
+<div class="student-id">${escapeHTML(s.id)}</div>
+</td>
+<td>${escapeHTML(s.roll)}</td>
+<td>${escapeHTML(s.className)} ${escapeHTML(s.section)}</td>
+<td>${escapeHTML(s.dob)}</td>
+<td><span class="status">Active</span></td>
+<td>
+<div class="actions">
+<button class="small-btn secondary" data-edit="${escapeHTML(s.id)}">Edit</button>
+<button class="small-btn danger" data-delete="${escapeHTML(s.id)}">Delete</button>
+</div>
+</td>
+</tr>
+`).join("");
+}
+
+table.addEventListener("click",function(e){
+const edit=e.target.closest("[data-edit]");
+const del=e.target.closest("[data-delete]");
+if(edit)editStudent(edit.dataset.edit);
+if(del)askDelete(del.dataset.delete);
+});
+
+document.getElementById("search").oninput=renderStudents;
+document.getElementById("filterClass").onchange=renderStudents;
+
+renderStudents();
+</script>
+
+</body>
+</html>

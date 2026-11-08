@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | AlongDigital</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f3f6fc;
+  color:#17233c;
+}
+
+.sidebar{
+  width:245px;
+  height:100vh;
+  position:fixed;
+  top:0;
+  left:0;
+  background:#101d3b;
+  color:white;
+  padding:25px 17px;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:800;
+  padding:5px 10px 30px;
+  letter-spacing:1px;
+}
+
+.brand span{color:#55a4ff;}
+
+.menu a{
+  display:block;
+  color:#c5d0e5;
+  text-decoration:none;
+  padding:14px;
+  border-radius:10px;
+  margin:6px 0;
+  font-size:14px;
+}
+
+.menu a:hover,
+.menu a.active{
+  background:#233b68;
+  color:white;
+}
+
+.menu a.active{
+  border-left:4px solid #55a4ff;
+}
+
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:17px;
+  right:17px;
+}
+
+.main{
+  margin-left:245px;
+  padding:28px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:28px;
+}
+
+.topbar h2{font-size:24px;}
+
+.admin{
+  background:white;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:13px;
+  box-shadow:0 3px 15px #dce3ef;
+}
+
+.welcome{
+  background:linear-gradient(120deg,#17366c,#2868bd);
+  color:white;
+  padding:25px;
+  border-radius:17px;
+  margin-bottom:24px;
+}
+
+.welcome h2{margin-bottom:8px;}
+.welcome p{color:#d8e8ff;font-size:14px;}
+
+.panel{
+  background:white;
+  border-radius:16px;
+  padding:23px;
+  margin-bottom:22px;
+  box-shadow:0 4px 15px #e3e9f3;
+}
+
+.panel h3{
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+.description{
+  color:#8190a5;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:17px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  color:#526078;
+  margin-bottom:8px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #dce3ee;
+  border-radius:9px;
+  outline:none;
+  font-size:14px;
+  background:white;
+}
+
+.field textarea{
+  min-height:85px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#347de0;
+}
+
+.full{grid-column:1/-1;}
+
+.check-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f5;
+  font-size:14px;
+}
+
+.check-row input{
+  width:17px;
+  height:17px;
+  accent-color:#2468c5;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+button{
+  border:0;
+  padding:12px 20px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.primary{
+  background:#2468c5;
+  color:white;
+}
+
+.secondary{
+  background:#edf2fa;
+  color:#263b5d;
+}
+
+.preview{
+  width:100%;
+  max-height:180px;
+  object-fit:contain;
+  border:1px dashed #cbd5e4;
+  border-radius:10px;
+  margin-top:12px;
+  display:none;
+}
+
+.note{
+  font-size:12px;
+  color:#7b879b;
+  margin-top:12px;
+  line-height:1.6;
+}
+
+.status{
+  display:none;
+  padding:13px;
+  background:#e9f8ef;
+  color:#187844;
+  border-radius:9px;
+  font-size:13px;
+  margin-top:15px;
+}
+
+@media(max-width:850px){
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+    padding:15px;
+  }
+
+  .brand{padding:5px 8px 15px;}
+
+  .menu{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+  }
+
+  .menu a{
+    white-space:nowrap;
+    padding:10px;
+    margin:0;
+  }
+
+  .logout{
+    position:static;
+    margin-top:10px;
+  }
+
+  .main{
+    margin-left:0;
+    padding:17px;
+  }
+}
+
+@media(max-width:550px){
+  .grid{grid-template-columns:1fr;}
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .panel{padding:17px;}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+  <div class="brand">ALONG<span>DIGITAL</span></div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="students.html">Students</a>
+    <a href="marks.html">Marks Management</a>
+    <a href="settings.html" class="active">Settings</a>
+  </nav>
+
+  <div class="logout">
+    <a href="../adminlogin.html"
+       style="color:#ffbaba;text-decoration:none;padding:12px;display:block;">
+      Logout
+    </a>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <h2>Portal Settings</h2>
+    <div class="admin">Administrator Panel</div>
+  </header>
+
+  <section class="welcome">
+    <h2>Website Configuration</h2>
+    <p>Manage your portal branding, academic session and result display preferences.</p>
+  </section>
+
+  <form id="settingsForm">
+
+    <!-- BRANDING -->
+    <section class="panel">
+      <h3>Portal Branding</h3>
+      <p class="description">Configure your website identity.</p>
+
+      <div class="grid">
+        <div class="field">
+          <label>Website Name</label>
+          <input id="siteName" type="text"
+          value="AlongDigital" required>
+        </div>
+
+        <div class="field">
+          <label>Portal Title</label>
+          <input id="portalTitle" type="text"
+          value="Student Result Portal" required>
+        </div>
+
+        <div class="field full">
+          <label>Website Tagline</label>
+          <input id="tagline" type="text"
+          placeholder="Your tagline here">
+        </div>
+
+        <div class="field full">
+          <label>Logo Image URL</label>
+          <input id="logoUrl" type="url"
+          placeholder="https://example.com/logo.png">
+          <img id="logoPreview" class="preview" alt="Logo preview">
+        </div>
+
+        <div class="field full">
+          <label>Favicon URL</label>
+          <input id="faviconUrl" type="url"
+          placeholder="https://example.com/favicon.png">
+        </div>
+      </div>
+    </section>
+
+    <!-- BANNER -->
+    <section class="panel">
+      <h3>Homepage Banner</h3>
+      <p class="description">Add an optional large banner image to the homepage.</p>
+
+      <div class="grid">
+        <div class="field full">
+          <label>Banner Image URL</label>
+          <input id="bannerUrl" type="url"
+          placeholder="https://example.com/banner.jpg">
+          <img id="bannerPreview" class="preview" alt="Banner preview">
+        </div>
+
+        <div class="field">
+          <label>Banner Heading</label>
+          <input id="bannerHeading" type="text"
+          placeholder="Welcome to AlongDigital">
+        </div>
+
+        <div class="field">
+          <label>Banner Subheading</label>
+          <input id="bannerSubheading" type="text"
+          placeholder="Check your academic results">
+        </div>
+      </div>
+
+      <div class="check-row">
+        <input id="showBanner" type="checkbox">
+        <label for="showBanner">Show banner on homepage</label>
+      </div>
+    </section>
+
+    <!-- ACADEMIC -->
+    <section class="panel">
+      <h3>Academic Configuration</h3>
+      <p class="description">Set the current academic session and examination.</p>
+
+      <div class="grid">
+        <div class="field">
+          <label>Academic Session</label>
+          <input id="session" type="text"
+          value="2026-27" placeholder="2026-27">
+        </div>
+
+        <div class="field">
+          <label>Current Examination</label>
+          <select id="currentExam">
+            <option>Unit Test</option>
+            <option>Half Yearly</option>
+            <option selected>Annual Examination</option>
+            <option>Practical</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Result Status</label>
+          <select id="resultStatus">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Passing Percentage</label>
+          <input id="passingPercent" type="number"
+          min="0" max="100" value="33">
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT DISPLAY -->
+    <section class="panel">
+      <h3>Result Display Settings</h3>
+      <p class="description">Choose what students can see on their marksheet.</p>
+
+      <div class="check-row">
+        <input id="showPhoto" type="checkbox" checked>
+        <label for="showPhoto">Show student photograph</label>
+      </div>
+
+      <div class="check-row">
+        <input id="showGrade" type="checkbox" checked>
+        <label for="showGrade">Show grades</label>
+      </div>
+
+      <div class="check-row">
+        <input id="showPercentage" type="checkbox" checked>
+        <label for="showPercentage">Show percentage</label>
+      </div>
+
+      <div class="check-row">
+        <input id="showRank" type="checkbox">
+        <label for="showRank">Show class rank</label>
+      </div>
+
+      <div class="check-row">
+        <input id="showSignature" type="checkbox" checked>
+        <label for="showSignature">Show authorized signature area</label>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="panel">
+      <h3>Contact Information</h3>
+      <p class="description">Contact details displayed on the portal.</p>
+
+      <div class="grid">
+        <div class="field">
+          <label>Contact Email</label>
+          <input id="contactEmail" type="email"
+          placeholder="support@example.com">
+        </div>
+
+        <div class="field">
+          <label>Contact Number</label>
+          <input id="contactNumber" type="tel"
+          placeholder="Contact number">
+        </div>
+
+        <div class="field full">
+          <label>Website Footer Text</label>
+          <textarea id="footerText"
+          placeholder="Copyright information or footer message"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button type="submit" class="primary">Save Settings</button>
+      <button type="reset" class="secondary">Reset Form</button>
+    </div>
+
+    <div class="status" id="statusMessage">
+      Settings saved in this browser demo.
+    </div>
+
+  </form>
+
+  <p class="note">
+    Important: These settings are currently a frontend demo.
+    They are not yet connected to Google Sheets or the public portal.
+    Permanent settings and admin permissions will be implemented through Apps Script.
+  </p>
+
+</main>
+
+<script>
+const form = document.getElementById("settingsForm");
+const statusMessage = document.getElementById("statusMessage");
+
+function setupPreview(inputId, imageId){
+  const input = document.getElementById(inputId);
+  const image = document.getElementById(imageId);
+
+  input.addEventListener("input",()=>{
+    const url = input.value.trim();
+
+    if(url){
+      image.src = url;
+      image.style.display = "block";
+      image.onerror = ()=>{
+        image.style.display = "none";
+      };
+    }else{
+      image.style.display = "none";
+    }
+  });
+}
+
+setupPreview("logoUrl","logoPreview");
+setupPreview("bannerUrl","bannerPreview");
+
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+
+  const settings = {
+    siteName:siteName.value,
+    portalTitle:portalTitle.value,
+    tagline:tagline.value,
+    logoUrl:logoUrl.value,
+    faviconUrl:faviconUrl.value,
+    bannerUrl:bannerUrl.value,
+    bannerHeading:bannerHeading.value,
+    bannerSubheading:bannerSubheading.value,
+    showBanner:showBanner.checked,
+    session:session.value,
+    currentExam:currentExam.value,
+    resultStatus:resultStatus.value,
+    passingPercent:passingPercent.value,
+    showPhoto:showPhoto.checked,
+    showGrade:showGrade.checked,
+    showPercentage:showPercentage.checked,
+    showRank:showRank.checked,
+    showSignature:showSignature.checked,
+    contactEmail:contactEmail.value,
+    contactNumber:contactNumber.value,
+    footerText:footerText.value
+  };
+
+  try{
+    localStorage.setItem("alongDigitalSettings",JSON.stringify(settings));
+    statusMessage.style.display = "block";
+    statusMessage.textContent = "Settings saved in this browser demo.";
+  }catch(error){
+    alert("Could not save settings in this browser.");
+  }
+});
+
+form.addEventListener("reset",()=>{
+  statusMessage.style.display = "none";
+  setTimeout(()=>{
+    document.getElementById("logoPreview").style.display = "none";
+    document.getElementById("bannerPreview").style.display = "none";
+  },0);
+});
+</script>
+
+</body>
+</html>

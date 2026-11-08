@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AlongDigital Student Registration Portal">
+<title>Student Registration | AlongDigital</title>
+</head>
+<link rel="stylesheet" href="form.css">
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="brand">
+    <h1>Along<span>Digital</span></h1>
+    <p>Smart Solutions for a Better Tomorrow</p>
+  </div>
+
+  <div class="header-title">
+    <h2>Student Registration Form</h2>
+    <p>Fill in the details below to register a new student.</p>
+  </div>
+</header>
+
+<!-- FORM -->
+<main>
+  <section class="container">
+
+    <div class="form-heading">
+      <h2>Student Details</h2>
+      <p>Please enter accurate information in all fields.</p>
+    </div>
+
+    <form id="studentForm">
+
+      <div class="form-group">
+        <input type="text" id="name" name="name"
+          placeholder=" " autocomplete="name" required>
+        <label for="name">Student Full Name</label>
+      </div>
+
+      <div class="form-group">
+        <span class="gender-title">Gender</span>
+        <div class="gender-options">
+          <label>
+            <input type="radio" name="gender" value="Male" required>
+            Male
+          </label>
+          <label>
+            <input type="radio" name="gender" value="Female">
+            Female
+          </label>
+          <label>
+            <input type="radio" name="gender" value="Other">
+            Other
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <select id="class" name="class" required>
+          <option value="" Disabled Selected></option>
+          <optgroup label="Secondary Level">
+            <option value="IX">IX</option>
+            <option value="X">X</option>
+          </optgroup>
+          <optgroup label="Senior Secondary Level">
+            <option value="XI Science">XI Science</option>
+            <option value="XI Commerce">XI Commerce</option>
+            <option value="XI Arts">XI Arts</option>
+            <option value="XII Science">XII Science</option>
+            <option value="XII Commerce">XII Commerce</option>
+            <option value="XII Arts">XII Arts</option>
+          </optgroup>
+        </select>
+        <label for="class">Select Class</label>
+      </div>
+
+      <div class="form-group">
+        <select id="section" name="section" required>
+          <option value="" Disabled Selected></option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+          <option value="I">I</option>
+        </select>
+        <label for="section">Select Section</label>
+      </div>
+
+      <div class="form-group">
+        <input type="date" id="dob" name="dob"
+          placeholder=" " required>
+        <label for="dob">Date of Birth</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="studentId" name="studentId"
+          placeholder=" " inputmode="numeric"
+          maxlength="11" pattern="[0-9]{11}" required>
+        <label for="studentId">Student ID (11 Digits)</label>
+        <span class="hint">Must contain exactly 11 digits and be unique.</span>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="mobile" name="mobile"
+          placeholder=" " inputmode="numeric"
+          maxlength="10" pattern="[0-9]{10}" required>
+        <label for="mobile">Mobile Number</label>
+      </div>
+      <!-- CAPTCHA -->
+<div class="captcha-box">
+  <label class="gender-title">Security Verification</label>
+
+  <div class="captcha-row">
+    <span id="captchaQuestion">Loading...</span>
+    <button type="button" id="refreshCaptcha" class="refresh-btn">↻</button>
+  </div>
+
+  <input type="number" id="captchaAnswer"
+    placeholder="Enter your answer" required>
+</div>
+
+<!-- Terms & Conditions -->
+<div class="terms-box">
+  <label>
+    <input type="checkbox" id="termsAccepted" required>
+    <span>
+      I agree to the
+      <a href="https://drive.google.com/file/d/1Vmf5jDcBErgP3xqRKXQCcc0qe_o5SRRX/view?usp=drivesdk" target="_blank" rel="noopener">
+        Terms & Conditions
+      </a>
+    </span>
+  </label>
+</div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Submit Registration
+      </button>
+
+      <p class="privacy">
+        Your data is safe with us. We value your privacy.
+      </p>
+
+    </form>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h2>AlongDigital</h2>
+      <p>Smart Solutions for a Better Tomorrow</p>
+    </div>
+
+    <div class="copyright">
+      © 2026 AlongDigital. All rights reserved.
+    </div>
+
+    <div class="footer-brand">
+      <h2>Learn. Grow. Succeed.</h2>
+    </div>
+  </div>
+</footer>
+
+<!-- SUCCESS / ERROR POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-card" id="popupCard">
+    <div class="popup-icon" id="popupIcon">✓</div>
+    <h2 id="popupTitle">Success!</h2>
+    <p id="popupText">Your registration was successful.</p>
+    <button type="button" class="popup-close" onclick="closePopup()">
+      Continue
+    </button>
+  </div>
+</div>
+</body>
+<script src="form.js"></script>
+</html>
+

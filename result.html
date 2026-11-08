@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102b50">
+  <title>Student Marksheet | AlongDigital</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f4f9;
+      color: #1d2939;
+      padding: 20px;
+    }
+
+    .topbar {
+      max-width: 1000px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #102b50;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .brand h2 {
+      color: #102b50;
+      font-size: 17px;
+    }
+
+    .brand p {
+      font-size: 10px;
+      color: #718096;
+      letter-spacing: 1px;
+      margin-top: 3px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: #102b50;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .marksheet {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(16, 43, 80, 0.08);
+    }
+
+    .sheet-header {
+      background: #102b50;
+      color: white;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .sheet-header h1 {
+      font-size: 25px;
+      letter-spacing: 1px;
+    }
+
+    .sheet-header p {
+      font-size: 12px;
+      color: #d5e2f4;
+      margin-top: 8px;
+      letter-spacing: 1.5px;
+    }
+
+    .session {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 6px 16px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 30px;
+      font-size: 12px;
+    }
+
+    .sheet-body {
+      padding: 28px;
+    }
+
+    .section-title {
+      color: #102b50;
+      font-size: 15px;
+      margin-bottom: 16px;
+      padding-left: 10px;
+      border-left: 4px solid #d5a23b;
+    }
+
+    .student-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .info-item {
+      border-bottom: 1px solid #e8edf4;
+      padding-bottom: 10px;
+      min-width: 0;
+    }
+
+    .info-item span {
+      display: block;
+      font-size: 11px;
+      color: #718096;
+      margin-bottom: 6px;
+    }
+
+    .info-item strong {
+      font-size: 14px;
+      color: #26364b;
+      overflow-wrap: anywhere;
+    }
+
+    .exam-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      background: #f4f7fb;
+      border: 1px solid #e5ebf3;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 28px;
+    }
+
+    .exam-box span {
+      font-size: 11px;
+      color: #718096;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .exam-box strong {
+      font-size: 14px;
+      color: #102b50;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+
+    th {
+      background: #102b50;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 14px 12px;
+      text-align: left;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #e8edf4;
+      font-size: 13px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 25px;
+    }
+
+    .summary-card {
+      border: 1px solid #e5ebf3;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .summary-card span {
+      color: #718096;
+      font-size: 11px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      font-size: 21px;
+      color: #102b50;
+    }
+
+    .result-status {
+      border-radius: 10px;
+      background: #edf8f1;
+      border: 1px solid #c9ead4;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .result-status span {
+      color: #467456;
+      font-size: 11px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .result-status strong {
+      color: #188344;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .note {
+      font-size: 11px;
+      color: #718096;
+      line-height: 1.6;
+      border-top: 1px solid #e8edf4;
+      padding-top: 15px;
+    }
+
+    .sheet-footer {
+      border-top: 1px solid #e8edf4;
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: #718096;
+      line-height: 1.7;
+    }
+
+    .signature {
+      text-align: center;
+      min-width: 130px;
+    }
+
+    .signature-line {
+      border-top: 1px solid #26364b;
+      padding-top: 7px;
+      font-size: 11px;
+      color: #526174;
+    }
+
+    .actions {
+      max-width: 1000px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .action-btn {
+      border: none;
+      border-radius: 9px;
+      padding: 13px 22px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .print-btn {
+      background: #102b50;
+      color: white;
+    }
+
+    .home-btn {
+      background: white;
+      color: #102b50;
+      border: 1px solid #d8e0eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 10px;
+      }
+
+      .sheet-header {
+        padding: 24px 12px;
+      }
+
+      .sheet-header h1 {
+        font-size: 20px;
+      }
+
+      .sheet-body {
+        padding: 18px 14px;
+      }
+
+      .student-info {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-card:last-child {
+        grid-column: span 2;
+      }
+
+      .exam-box {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .sheet-footer {
+        padding: 18px 14px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .student-info {
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card:last-child {
+        grid-column: auto;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .topbar,
+      .actions {
+        display: none !important;
+      }
+
+      .marksheet {
+        box-shadow: none;
+        border: 1px solid #dce2ea;
+        border-radius: 0;
+        max-width: 100%;
+      }
+
+      .sheet-header,
+      th {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .sheet-body {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">AD</div>
+      <div>
+        <h2>ALONGDIGITAL</h2>
+        <p>STUDENT RESULT PORTAL</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-btn">← Back to Home</a>
+  </header>
+
+  <main class="marksheet">
+
+    <section class="sheet-header">
+      <h1>ACADEMIC MARKSHEET</h1>
+      <p>STUDENT PERFORMANCE REPORT</p>
+      <div class="session">SESSION 2026–27</div>
+    </section>
+
+    <section class="sheet-body">
+
+      <h3 class="section-title">Student Information</h3>
+
+      <div class="student-info">
+
+        <div class="info-item">
+          <span>Student Name</span>
+          <strong id="studentName">Student Name</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Student ID</span>
+          <strong id="studentId">00000000000</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Roll Number</span>
+          <strong id="rollNumber">0000</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Class</span>
+          <strong id="studentClass">Class XI</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Section</span>
+          <strong id="studentSection">A</strong>
+        </div>
+
+        <div class="info-item">
+          <span>School Name</span>
+          <strong id="schoolName">School Name</strong>
+        </div>
+
+      </div>
+
+      <div class="exam-box">
+        <div>
+          <span>Examination</span>
+          <strong id="examName">Annual Examination</strong>
+        </div>
+
+        <div>
+          <span>Academic Session</span>
+          <strong id="examSession">2026–27</strong>
+        </div>
+      </div>
+
+      <h3 class="section-title">Subject-wise Performance</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Subject</th>
+              <th>Maximum Marks</th>
+              <th>Obtained Marks</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+
+          <tbody id="marksTableBody">
+            <tr>
+              <td>01</td>
+              <td>English</td>
+              <td>100</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td>Physics</td>
+              <td>100</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td>Chemistry</td>
+              <td>100</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td>Mathematics</td>
+              <td>100</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td>Computer Science</td>
+              <td>100</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-title">Result Summary</h3>
+
+      <div class="summary">
+
+        <div class="summary-card">
+          <span>Total Marks</span>
+          <strong id="totalMarks">-- / --</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Percentage</span>
+          <strong id="percentage">--%</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Overall Grade</span>
+          <strong id="overallGrade">--</strong>
+        </div>
+
+      </div>
+
+      <div class="result-status">
+        <span>FINAL RESULT</span>
+        <strong id="resultStatus">--</strong>
+      </div>
+
+      <p class="note">
+        Note: This marksheet is generated electronically through AlongDigital
+        Student Result Portal. The displayed result is subject to the official
+        records of the concerned institution.
+      </p>
+
+    </section>
+
+    <footer class="sheet-footer">
+      <div class="footer-text">
+        <strong>ALONGDIGITAL</strong><br>
+        Student Result Portal<br>
+        © 2026 AlongDigital. All Rights Reserved.
+      </div>
+
+      <div class="signature">
+        <div class="signature-line">
+          Authorized Signature
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <div class="actions">
+    <a href="index.html" class="action-btn home-btn">Back to Home</a>
+    <button class="action-btn print-btn" onclick="window.print()">
+      Print / Save PDF
+    </button>
+  </div>
+
+</body>
+</html>

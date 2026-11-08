@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b68">
+
+<title>Admin Dashboard | AlongDigital</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --navy: #123b68;
+  --blue: #1765a5;
+  --gold: #f4c52e;
+  --bg: #f1f5fa;
+  --text: #25364a;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Sidebar */
+
+.sidebar {
+  width: 255px;
+  height: 100vh;
+  background: linear-gradient(180deg,#10365e,#08294b);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 25px 17px;
+  z-index: 100;
+  transition: .3s;
+}
+
+.brand {
+  padding: 5px 10px 28px;
+  border-bottom: 1px solid #ffffff25;
+}
+
+.brand h2 {
+  font-size: 23px;
+  letter-spacing: 1px;
+}
+
+.brand span {
+  color: var(--gold);
+}
+
+.brand p {
+  font-size: 12px;
+  margin-top: 6px;
+  color: #c8d8eb;
+}
+
+.menu-title {
+  font-size: 11px;
+  color: #91a9c2;
+  margin: 27px 10px 12px;
+  letter-spacing: 1.5px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 12px;
+  margin: 5px 0;
+  color: #d8e5f2;
+  text-decoration: none;
+  border-radius: 9px;
+  font-size: 14px;
+  transition: .2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #ffffff19;
+  color: white;
+}
+
+.nav-link.active {
+  border-left: 3px solid var(--gold);
+}
+
+.nav-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.sidebar-bottom {
+  position: absolute;
+  bottom: 22px;
+  left: 17px;
+  right: 17px;
+  border-top: 1px solid #ffffff25;
+  padding-top: 15px;
+}
+
+/* Main */
+
+.main {
+  margin-left: 255px;
+  min-height: 100vh;
+}
+
+.topbar {
+  height: 75px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-shadow: 0 2px 12px #00000008;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.top-left h3 {
+  color: var(--navy);
+  font-size: 19px;
+}
+
+.menu-toggle {
+  border: none;
+  background: none;
+  font-size: 25px;
+  cursor: pointer;
+  display: none;
+  color: var(--navy);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #e6eff9;
+  color: var(--navy);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 19px;
+}
+
+.profile-info strong {
+  display: block;
+  font-size: 13px;
+}
+
+.profile-info small {
+  color: #8492a3;
+  font-size: 11px;
+}
+
+/* Content */
+
+.content {
+  padding: 30px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 27px;
+}
+
+.welcome h1 {
+  font-size: 25px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  color: #7d8b9c;
+  font-size: 14px;
+}
+
+.date-label {
+  background: white;
+  padding: 11px 15px;
+  border-radius: 9px;
+  color: #65768b;
+  font-size: 13px;
+  border: 1px solid #e5ebf2;
+}
+
+/* Banner */
+
+.banner {
+  background: linear-gradient(110deg,#123b68,#1766a7);
+  color: white;
+  border-radius: 15px;
+  padding: 27px;
+  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.banner h2 {
+  font-size: 21px;
+  margin-bottom: 9px;
+}
+
+.banner p {
+  color: #d2e2f3;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.banner-icon {
+  font-size: 53px;
+  color: var(--gold);
+  opacity: .9;
+}
+
+/* Cards */
+
+.section-heading {
+  font-size: 17px;
+  color: var(--navy);
+  margin: 28px 0 16px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 17px;
+}
+
+.stat-card {
+  background: white;
+  padding: 21px;
+  border-radius: 13px;
+  border: 1px solid #e8edf3;
+  box-shadow: 0 3px 12px #00000004;
+}
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+
+.blue { background: #e7f0fc; color: #2365a7; }
+.green { background: #e6f7ed; color: #169b55; }
+.orange { background: #fff2e3; color: #d88a26; }
+.purple { background: #f1eaff; color: #8056c5; }
+
+.stat-card h2 {
+  font-size: 27px;
+  color: #203b59;
+}
+
+.stat-card p {
+  color: #8492a3;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Quick Actions */
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 17px;
+}
+
+.action-card {
+  background: white;
+  padding: 22px;
+  border: 1px solid #e7edf4;
+  border-radius: 13px;
+  text-decoration: none;
+  color: var(--text);
+  transition: .2s;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px #123b6810;
+  border-color: #b7d0eb;
+}
+
+.action-card .action-icon {
+  font-size: 25px;
+  margin-bottom: 14px;
+}
+
+.action-card h3 {
+  font-size: 15px;
+  margin-bottom: 7px;
+  color: var(--navy);
+}
+
+.action-card p {
+  color: #8794a3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Recent Activity */
+
+.activity {
+  background: white;
+  border: 1px solid #e8edf3;
+  border-radius: 13px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+.activity-head {
+  padding: 19px;
+  border-bottom: 1px solid #edf0f5;
+  font-weight: bold;
+  color: var(--navy);
+}
+
+.activity-body {
+  padding: 22px;
+  color: #8995a4;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Footer */
+
+.footer {
+  text-align: center;
+  color: #8b98a7;
+  font-size: 12px;
+  padding: 28px 10px;
+}
+
+/* Mobile */
+
+@media(max-width:1050px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .topbar {
+    padding: 0 17px;
+  }
+
+  .content {
+    padding: 22px 16px;
+  }
+
+  .welcome {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+
+  .actions {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .profile-info {
+    display: none;
+  }
+}
+
+@media(max-width:420px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-card h2 {
+    font-size: 23px;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .banner {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand">
+    <h2>ALONG<span>DIGITAL</span></h2>
+    <p>Student Result Portal</p>
+  </div>
+
+  <div class="menu-title">MAIN MENU</div>
+
+  <a href="dashboard.html" class="nav-link active">
+    <span class="nav-icon">⌂</span> Dashboard
+  </a>
+
+  <a href="students.html" class="nav-link">
+    <span class="nav-icon">♙</span> Students
+  </a>
+
+  <a href="marks.html" class="nav-link">
+    <span class="nav-icon">▤</span> Marks Management
+  </a>
+
+  <a href="#" class="nav-link">
+    <span class="nav-icon">✓</span> Result Management
+  </a>
+
+  <div class="menu-title">CONFIGURATION</div>
+
+  <a href="settings.html" class="nav-link">
+    <span class="nav-icon">⚙</span> Website Settings
+  </a>
+
+  <a href="#" class="nav-link">
+    <span class="nav-icon">▧</span> Image Management
+  </a>
+
+  <a href="#" class="nav-link">
+    <span class="nav-icon">▤</span> Database Settings
+  </a>
+
+  <div class="sidebar-bottom">
+    <a href="../index.html" class="nav-link">
+      <span class="nav-icon">↗</span> View Website
+    </a>
+
+    <a href="../adminlogin.html" class="nav-link">
+      <span class="nav-icon">⇥</span> Logout
+    </a>
+  </div>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+  <header class="topbar">
+
+    <div class="top-left">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h3>Admin Dashboard</h3>
+    </div>
+
+    <div class="profile">
+      <div class="avatar">♙</div>
+      <div class="profile-info">
+        <strong id="adminName">Administrator</strong>
+        <small>Admin Account</small>
+      </div>
+    </div>
+
+  </header>
+
+
+  <main class="content">
+
+    <section class="welcome">
+      <div>
+        <h1>Welcome Back, Admin!</h1>
+        <p>Manage your student records and examination results.</p>
+      </div>
+
+      <div class="date-label" id="currentDate">
+        Dashboard
+      </div>
+    </section>
+
+
+    <!-- WELCOME BANNER -->
+
+    <section class="banner">
+      <div>
+        <h2>AlongDigital Management System</h2>
+        <p>
+          Your central platform for student information,
+          academic records and result management.
+        </p>
+      </div>
+
+      <div class="banner-icon">♜</div>
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <h3 class="section-heading">Overview</h3>
+
+    <section class="stats">
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon blue">♙</div>
+        </div>
+        <h2>000</h2>
+        <p>Total Students</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon green">✓</div>
+        </div>
+        <h2>000</h2>
+        <p>Published Results</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon orange">▤</div>
+        </div>
+        <h2>000</h2>
+        <p>Pending Results</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon purple">▣</div>
+        </div>
+        <h2>000</h2>
+        <p>Total Classes</p>
+      </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <h3 class="section-heading">Quick Management</h3>
+
+    <section class="actions">
+
+      <a href="students.html" class="action-card">
+        <div class="action-icon">👨‍🎓</div>
+        <h3>Student Management</h3>
+        <p>Add, edit and manage student information.</p>
+      </a>
+
+      <a href="marks.html" class="action-card">
+        <div class="action-icon">📊</div>
+        <h3>Manage Marks</h3>
+        <p>Update subject-wise marks and grades.</p>
+      </a>
+
+      <a href="#" class="action-card">
+        <div class="action-icon">📋</div>
+        <h3>Publish Results</h3>
+        <p>Manage examination result publishing.</p>
+      </a>
+
+      <a href="settings.html" class="action-card">
+        <div class="action-icon">⚙️</div>
+        <h3>Website Settings</h3>
+        <p>Manage branding and website preferences.</p>
+      </a>
+
+      <a href="#" class="action-card">
+        <div class="action-icon">🖼️</div>
+        <h3>Image Settings</h3>
+        <p>Manage logo, banner and student photos.</p>
+      </a>
+
+      <a href="#" class="action-card">
+        <div class="action-icon">🗄️</div>
+        <h3>Database</h3>
+        <p>Manage future database integration.</p>
+      </a>
+
+    </section>
+
+
+    <!-- ACTIVITY -->
+
+    <h3 class="section-heading">Recent Activity</h3>
+
+    <section class="activity">
+      <div class="activity-head">
+        System Activity
+      </div>
+
+      <div class="activity-body">
+        Activity records will appear here after backend integration.
+      </div>
+    </section>
+
+
+    <footer class="footer">
+      © 2026 AlongDigital · All Rights Reserved
+      <br><br>
+      Student Result Management System
+    </footer>
+
+  </main>
+
+</div>
+
+
+<script>
+
+// Mobile Sidebar
+
+const sidebar = document.getElementById("sidebar");
+const menuToggle = document.getElementById("menuToggle");
+
+menuToggle.addEventListener("click", function() {
+  sidebar.classList.toggle("show");
+});
+
+// Current Date
+
+const date = new Date();
+
+document.getElementById("currentDate").textContent =
+  date.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+
+</script>
+
+</body>
+</html>

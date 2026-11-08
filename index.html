@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#153e68">
+
+  <title>Examination Results | AlongDigital</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #153e68;
+      --blue: #20558a;
+      --background: #f0f4fa;
+      --text: #203c5c;
+      --muted: #718096;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+
+    .header {
+      background: var(--navy);
+      color: white;
+      padding: 25px 28px;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-icon {
+      width: 78px;
+      height: 78px;
+      border: 3px solid white;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .brand-name {
+      font-size: clamp(22px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .brand-subtitle {
+      font-size: clamp(12px, 2vw, 20px);
+      margin-top: 7px;
+      opacity: .9;
+      letter-spacing: .5px;
+    }
+
+    .menu-button {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .menu {
+      display: none;
+      max-width: 1200px;
+      margin: 18px auto 0;
+      text-align: right;
+    }
+
+    .menu.show {
+      display: block;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 10px;
+      display: inline-block;
+    }
+
+    /* MAIN */
+
+    .main {
+      width: 100%;
+      max-width: 1050px;
+      margin: auto;
+      padding: 48px 25px 35px;
+      flex: 1;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(36px, 6vw, 68px);
+      color: var(--navy);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 25px);
+      margin-top: 17px;
+    }
+
+    /* SEARCH CARD */
+
+    .search-card {
+      background: white;
+      border-radius: 32px;
+      padding: 42px 38px 32px;
+      box-shadow: 0 8px 30px rgba(25, 55, 90, .045);
+    }
+
+    .search-card h2 {
+      color: #111827;
+      font-size: clamp(25px, 4vw, 36px);
+      margin-bottom: 48px;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #34465c;
+      font-size: clamp(17px, 2.5vw, 24px);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      height: 78px;
+      padding: 0 25px;
+      border: 2px solid #e2e5e9;
+      border-radius: 20px;
+      background: #fff;
+      color: #26384c;
+      font-size: clamp(17px, 2.5vw, 24px);
+      outline: none;
+      transition: .2s ease;
+    }
+
+    .form-group input::placeholder {
+      color: #9aa8b9;
+    }
+
+    .form-group input:focus {
+      border-color: #3977b6;
+      box-shadow: 0 0 0 4px rgba(57, 119, 182, .09);
+    }
+
+    .search-button {
+      width: 100%;
+      min-height: 82px;
+      border: none;
+      border-radius: 19px;
+      background: var(--blue);
+      color: white;
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .search-button:hover {
+      background: var(--navy);
+    }
+
+    .search-button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+    }
+
+    .secure-text {
+      color: var(--muted);
+      text-align: center;
+      margin-top: 35px;
+      font-size: clamp(14px, 2vw, 21px);
+    }
+
+    .message {
+      display: none;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fff0f0;
+      color: #bd3030;
+    }
+
+    .message.success {
+      background: #eaf8ef;
+      color: #187b40;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      padding: 25px 15px;
+      text-align: center;
+      color: #718096;
+      font-size: clamp(13px, 2vw, 19px);
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 20px 17px;
+      }
+
+      .brand {
+        gap: 12px;
+      }
+
+      .brand-icon {
+        width: 53px;
+        height: 53px;
+        border-radius: 13px;
+        font-size: 21px;
+      }
+
+      .menu-button {
+        font-size: 29px;
+      }
+
+      .main {
+        padding: 48px 17px 28px;
+      }
+
+      .intro {
+        margin-bottom: 35px;
+      }
+
+      .intro h1 {
+        letter-spacing: -1px;
+      }
+
+      .search-card {
+        padding: 30px 23px 25px;
+        border-radius: 27px;
+      }
+
+      .search-card h2 {
+        margin-bottom: 38px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group input {
+        height: 68px;
+        border-radius: 17px;
+        padding: 0 18px;
+      }
+
+      .search-button {
+        min-height: 72px;
+        border-radius: 16px;
+      }
+
+      .secure-text {
+        margin-top: 27px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+
+      <div class="brand">
+        <div class="brand-icon">AD</div>
+
+        <div>
+          <div class="brand-name">ALONGDIGITAL</div>
+          <div class="brand-subtitle">STUDENT RESULT PORTAL</div>
+        </div>
+      </div>
+
+      <button class="menu-button" id="menuButton"
+        type="button" aria-label="Open menu">
+        ☰
+      </button>
+
+    </div>
+
+    <nav class="menu" id="menu">
+      <a href="index.html">Home</a>
+      <a href="adminlogin.html">Admin Login</a>
+    </nav>
+  </header>
+
+  <main class="main">
+
+    <section class="intro">
+      <h1>Examination Results</h1>
+      <p>Check your academic performance online</p>
+    </section>
+
+    <section class="search-card">
+
+      <h2>Find Your Result</h2>
+
+      <form id="resultSearchForm">
+
+        <div class="form-group">
+          <label for="studentId">Student ID</label>
+
+          <input
+            type="text"
+            id="studentId"
+            name="studentId"
+            placeholder="Enter 11-digit Student ID"
+            inputmode="numeric"
+            maxlength="11"
+            autocomplete="off"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="rollNumber">Roll Number</label>
+
+          <input
+            type="text"
+            id="rollNumber"
+            name="rollNumber"
+            placeholder="Enter 4-5 digit Roll Number"
+            inputmode="numeric"
+            minlength="4"
+            maxlength="5"
+            autocomplete="off"
+            required
+          >
+        </div>
+
+        <button type="submit" class="search-button" id="searchButton">
+          Search Result
+        </button>
+
+        <div class="loading" id="searchLoading">
+          Verifying your details...
+        </div>
+
+        <div class="message" id="searchMessage" role="status"></div>
+
+      </form>
+
+      <p class="secure-text">
+        Your information will be verified securely.
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 AlongDigital · All Rights Reserved
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const menu = document.getElementById("menu");
+
+    menuButton.addEventListener("click", () => {
+      menu.classList.toggle("show");
+    });
+
+    // Allow numeric characters only.
+    ["studentId", "rollNumber"].forEach(id => {
+      document.getElementById(id).addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "");
+      });
+    });
+  </script>
+<script src="script.js"></script>
+<script src="config.js"></script>
+
+</body>
+</html>

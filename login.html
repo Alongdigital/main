@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | AlongDigital</title>
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+body {
+  min-height: 100vh;
+  background: #f4f6fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background: #102b50;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #fff;
+  font-size: 23px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #d5a23b;
+}
+
+.home-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 15px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 35px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(16, 43, 80, 0.10);
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.heading h1 {
+  color: #102b50;
+  font-size: 28px;
+  margin-bottom: 9px;
+}
+
+.heading p {
+  color: #777;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #26384d;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d8dee8;
+  border-radius: 9px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+}
+
+.form-group input:focus {
+  border-color: #d5a23b;
+  box-shadow: 0 0 0 3px rgba(213, 162, 59, 0.12);
+}
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 65px;
+}
+
+.show-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: #102b50;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0 23px;
+  font-size: 13px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+}
+
+.forgot-link {
+  color: #102b50;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: #102b50;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: #d5a23b;
+  color: #102b50;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 23px;
+  color: #777;
+  font-size: 14px;
+}
+
+.signup-link a {
+  color: #102b50;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 17px;
+  color: #777;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 22px;
+  }
+
+  .heading h1 {
+    font-size: 25px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="logo">
+      Along<span>Digital</span>
+    </a>
+
+    <a href="../index.html" class="home-link">Home</a>
+  </nav>
+
+  <main class="main">
+
+    <section class="login-card">
+
+      <div class="heading">
+        <h1>Welcome Back</h1>
+        <p>Login to your AlongDigital account</p>
+      </div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <div class="password-box">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              id="togglePassword"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+
+          <label class="remember">
+            <input type="checkbox" id="rememberMe">
+            Remember me
+          </label>
+
+          <a href="forget-password.html" class="forgot-link">Forgot Password?</a>
+
+        </div>
+
+        <button type="submit" class="login-btn">
+          Login to Account
+        </button>
+
+      </form>
+
+      <div class="signup-link">
+        Don't have an account?
+        <a href="signup.html">Create Account</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 AlongDigital. All Rights Reserved.
+  </footer>
+<script type="module" src="auth.js"></script>
+
+</body>
+</html>
